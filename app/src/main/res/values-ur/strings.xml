@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">کرپٹو پرافٹ کیلکولیٹر</string>
+    <string name="welcome_back">خوش آمدید</string>
+    <string name="include_brokerage">ایکسچینج فیس شامل کریں</string>
+    <string name="brokerage_percent">فیس (%)</string>
+    <string name="create_account">اکاؤنٹ بنائیں</string>
+    <string name="email">ای میل</string>
+    <string name="password">پاس ورڈ</string>
+    <string name="sign_in">سائن ان</string>
+    <string name="sign_up">سائن اپ</string>
+    <string name="continue_with_google">گوگل کے ساتھ جاری رکھیں</string>
+    <string name="already_have_account">پہلے سے اکاؤنٹ ہے؟ سائن ان کریں</string>
+    <string name="dont_have_account">اکاؤنٹ نہیں ہے؟ سائن اپ کریں</string>
+    <string name="calculator_title">کرپٹو پرافٹ کیلکولیٹر</string>
+    <string name="select_coin">کوائن منتخب کریں</string>
+    <string name="coin">کوائن</string>
+    <string name="amount_invested">سرمایہ کاری کی رقم (USD)</string>
+    <string name="current_coin_price">موجودہ کوائن قیمت (USD)</string>
+    <string name="mode_target_price">موڈ: ٹارگٹ قیمت</string>
+    <string name="mode_price_increase">موڈ: قیمت میں اضافہ</string>
+    <string name="target_price">ٹارگٹ قیمت (USD)</string>
+    <string name="price_increase">قیمت میں اضافہ (USD)</string>
+    <string name="calculate">حساب کریں</string>
+    <string name="history">تاریخ</string>
+    <string name="fill_valid_numbers">براہ کرم تمام خانوں میں درست نمبر درج کریں۔</string>
+    <string name="amount_price_positive">رقم اور قیمت صفر سے زیادہ ہونی چاہیے۔</string>
+    <string name="settings">ترتیبات</string>
+    <string name="account">اکاؤنٹ</string>
+    <string name="not_logged_in">لاگ ان نہیں</string>
+    <string name="dark_mode">ڈارک موڈ</string>
+
+    <string name="language_setting">زبان</string>
+
+    <string name="reset_history">تاریخ ری سیٹ کریں</string>
+    <string name="share_app">ایپ شیئر کریں</string>
+    <string name="rate_this_app">اس ایپ کو ریٹ کریں</string>
+    <string name="privacy_policy">پرائیویسی پالیسی</string>
+    <string name="sign_out">سائن آؤٹ</string>
+    <string name="delete_account">اکاؤنٹ حذف کریں</string>
+    <string name="reset_history_confirm_title">تاریخ ری سیٹ کریں؟</string>
+    <string name="reset_history_confirm_text">اس سے آپ کی تمام محفوظ شدہ حساب کتاب مستقل طور پر حذف ہو جائے گی۔</string>
+    <string name="delete_account_confirm_title">اکاؤنٹ حذف کریں؟</string>
+    <string name="delete_account_confirm_text">اس سے آپ کا اکاؤنٹ اور تمام ڈیٹا مستقل طور پر حذف ہو جائے گا۔ یہ واپس نہیں ہو سکتا۔</string>
+    <string name="reset">ری سیٹ</string>
+    <string name="delete">حذف کریں</string>
+    <string name="cancel">منسوخ کریں</string>
+    <string name="app_version">کرپٹو پرافٹ کیلکولیٹر v1.0</string>
+</resources>

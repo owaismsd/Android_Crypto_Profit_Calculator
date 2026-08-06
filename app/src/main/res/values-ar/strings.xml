@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">حاسبة أرباح العملات المشفرة</string>
+    <string name="include_brokerage">تضمين رسوم التبادل</string>
+    <string name="brokerage_percent">الرسوم (%)</string>
+    <string name="welcome_back">مرحبًا بعودتك</string>
+    <string name="create_account">إنشاء حساب</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="sign_up">إنشاء حساب</string>
+    <string name="continue_with_google">المتابعة باستخدام جوجل</string>
+    <string name="already_have_account">لديك حساب بالفعل؟ سجل الدخول</string>
+    <string name="dont_have_account">ليس لديك حساب؟ أنشئ حسابًا</string>
+    <string name="calculator_title">حاسبة أرباح العملات المشفرة</string>
+    <string name="select_coin">اختر عملة</string>
+    <string name="coin">العملة</string>
+    <string name="amount_invested">المبلغ المستثمر (دولار)</string>
+    <string name="current_coin_price">السعر الحالي للعملة (دولار)</string>
+    <string name="mode_target_price">الوضع: السعر المستهدف</string>
+    <string name="mode_price_increase">الوضع: زيادة السعر</string>
+    <string name="target_price">السعر المستهدف (دولار)</string>
+    <string name="price_increase">زيادة السعر (دولار)</string>
+    <string name="calculate">احسب</string>
+    <string name="history">السجل</string>
+    <string name="fill_valid_numbers">يرجى ملء جميع الحقول بأرقام صحيحة.</string>
+    <string name="amount_price_positive">يجب أن يكون المبلغ والسعر أكبر من صفر.</string>
+    <string name="settings">الإعدادات</string>
+    <string name="account">الحساب</string>
+    <string name="not_logged_in">غير مسجل الدخول</string>
+    <string name="dark_mode">الوضع الداكن</string>
+
+    <!-- We added the language setting string right here -->
+    <string name="language_setting">اللغة</string>
+
+    <string name="reset_history">إعادة تعيين السجل</string>
+    <string name="share_app">مشاركة التطبيق</string>
+    <string name="rate_this_app">قيّم هذا التطبيق</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="sign_out">تسجيل الخروج</string>
+    <string name="delete_account">حذف الحساب</string>
+    <string name="reset_history_confirm_title">إعادة تعيين السجل؟</string>
+    <string name="reset_history_confirm_text">سيؤدي هذا إلى حذف جميع حساباتك المحفوظة نهائيًا.</string>
+    <string name="delete_account_confirm_title">حذف الحساب؟</string>
+    <string name="delete_account_confirm_text">سيؤدي هذا إلى حذف حسابك وجميع بياناتك نهائيًا. لا يمكن التراجع عن هذا.</string>
+    <string name="reset">إعادة تعيين</string>
+    <string name="delete">حذف</string>
+    <string name="cancel">إلغاء</string>
+    <string name="app_version">حاسبة أرباح العملات المشفرة v1.0</string>
+</resources>

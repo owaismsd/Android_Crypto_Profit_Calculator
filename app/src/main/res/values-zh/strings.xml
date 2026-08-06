@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">加密货币利润计算器</string>
+    <string name="welcome_back">欢迎回来</string>
+    <string name="include_brokerage">包含交易所费用</string>
+    <string name="brokerage_percent">费率 (%)</string>
+    <string name="create_account">创建账户</string>
+    <string name="email">邮箱</string>
+    <string name="password">密码</string>
+    <string name="sign_in">登录</string>
+    <string name="sign_up">注册</string>
+    <string name="continue_with_google">使用谷歌继续</string>
+    <string name="already_have_account">已有账户？登录</string>
+    <string name="dont_have_account">没有账户？注册</string>
+    <string name="calculator_title">加密货币利润计算器</string>
+    <string name="select_coin">选择币种</string>
+    <string name="coin">币种</string>
+    <string name="amount_invested">投资金额（美元）</string>
+    <string name="current_coin_price">当前币价（美元）</string>
+    <string name="mode_target_price">模式：目标价格</string>
+    <string name="mode_price_increase">模式：价格涨幅</string>
+    <string name="target_price">目标价格（美元）</string>
+    <string name="price_increase">价格涨幅（美元）</string>
+    <string name="calculate">计算</string>
+    <string name="history">历史记录</string>
+    <string name="fill_valid_numbers">请在所有字段中填写有效数字。</string>
+    <string name="amount_price_positive">金额和价格必须大于零。</string>
+    <string name="settings">设置</string>
+    <string name="account">账户</string>
+    <string name="not_logged_in">未登录</string>
+
+    <string name="dark_mode">深色模式</string>
+
+    <string name="language_setting">语言</string>
+
+    <string name="reset_history">重置历史记录</string>
+    <string name="share_app">分享应用</string>
+    <string name="rate_this_app">给此应用评分</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="sign_out">退出登录</string>
+    <string name="delete_account">删除账户</string>
+    <string name="reset_history_confirm_title">重置历史记录？</string>
+    <string name="reset_history_confirm_text">这将永久删除您保存的所有计算记录。</string>
+    <string name="delete_account_confirm_title">删除账户？</string>
+    <string name="delete_account_confirm_text">这将永久删除您的账户和所有数据。此操作无法撤销。</string>
+    <string name="reset">重置</string>
+    <string name="delete">删除</string>
+    <string name="cancel">取消</string>
+    <string name="app_version">加密货币利润计算器 v1.0</string>
+</resources>

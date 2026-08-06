@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "127524756617",
+    "firebase_url": "https://cryptoprofitcalculator-90bf7-default-rtdb.firebaseio.com",
+    "project_id": "cryptoprofitcalculator-90bf7",
+    "storage_bucket": "cryptoprofitcalculator-90bf7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127524756617:android:f445a9df71fb3e4b117a58",
+        "android_client_info": {
+          "package_name": "com.owais.cryptoprofitcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127524756617-igo3v060paohhr8urrr86d67lnogc8ib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.owais.cryptoprofitcalculator",
+            "certificate_hash": "92e723adf2a6155229dd6b611b8e293434f21a35"
+          }
+        },
+        {
+          "client_id": "127524756617-79ushljkist5od97isasjumj43jeplau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsC3YEY8Tp2eG9W9dp2SpyvdrhHo4weUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127524756617-79ushljkist5od97isasjumj43jeplau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

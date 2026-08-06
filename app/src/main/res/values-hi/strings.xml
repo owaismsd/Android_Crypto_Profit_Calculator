@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">क्रिप्टो प्रॉफिट कैलकुलेटर</string>
+    <string name="welcome_back">वापसी पर स्वागत है</string>
+    <string name="include_brokerage">एक्सचेंज शुल्क शामिल करें</string>
+    <string name="brokerage_percent">शुल्क (%)</string>
+    <string name="create_account">खाता बनाएं</string>
+    <string name="email">ईमेल</string>
+    <string name="password">पासवर्ड</string>
+    <string name="sign_in">साइन इन करें</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="continue_with_google">Google के साथ जारी रखें</string>
+    <string name="already_have_account">पहले से खाता है? साइन इन करें</string>
+    <string name="dont_have_account">खाता नहीं है? साइन अप करें</string>
+    <string name="calculator_title">क्रिप्टो प्रॉफिट कैलकुलेटर</string>
+    <string name="select_coin">एक कॉइन चुनें</string>
+    <string name="coin">कॉइन</string>
+    <string name="amount_invested">निवेश की गई राशि (USD)</string>
+    <string name="current_coin_price">कॉइन की मौजूदा कीमत (USD)</string>
+    <string name="mode_target_price">मोड: लक्ष्य कीमत</string>
+    <string name="mode_price_increase">मोड: कीमत में वृद्धि</string>
+    <string name="target_price">लक्ष्य कीमत (USD)</string>
+    <string name="price_increase">कीमत में वृद्धि (USD)</string>
+    <string name="calculate">गणना करें</string>
+    <string name="history">इतिहास</string>
+    <string name="fill_valid_numbers">कृपया सभी फ़ील्ड में मान्य संख्याएं भरें।</string>
+    <string name="amount_price_positive">राशि और कीमत शून्य से अधिक होनी चाहिए।</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="account">खाता</string>
+    <string name="not_logged_in">लॉग इन नहीं है</string>
+    <string name="dark_mode">डार्क मोड</string>
+
+    <string name="language_setting">भाषा</string>
+
+    <string name="reset_history">इतिहास रीसेट करें</string>
+    <string name="share_app">ऐप शेयर करें</string>
+    <string name="rate_this_app">इस ऐप को रेट करें</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="sign_out">साइन आउट करें</string>
+    <string name="delete_account">खाता हटाएं</string>
+    <string name="reset_history_confirm_title">इतिहास रीसेट करें?</string>
+    <string name="reset_history_confirm_text">इससे आपकी सभी सहेजी गई गणनाएं स्थायी रूप से हट जाएंगी।</string>
+    <string name="delete_account_confirm_title">खाता हटाएं?</string>
+    <string name="delete_account_confirm_text">इससे आपका खाता और सभी डेटा स्थायी रूप से हट जाएगा। इसे वापस नहीं लाया जा सकता।</string>
+    <string name="reset">रीसेट करें</string>
+    <string name="delete">हटाएं</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="app_version">क्रिप्टो प्रॉफिट कैलकुलेटर v1.0</string>
+</resources>
