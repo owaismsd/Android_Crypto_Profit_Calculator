@@ -84,4 +84,50 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
             } catch (_: Exception) {}
         }
     }
+
+    // Function to fetch live price for any custom searched coin automatically
+    fun fetchLiveCoinPrice(query: String, onResult: (CoinPrice?) -> Unit) {
+        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            try {
+                val searchUrl = java.net.URL("https://api.coingecko.com/api/v3/search?query=${java.net.URLEncoder.encode(query, "UTF-8")}")
+                val searchResponse = searchUrl.readText()
+                val json = org.json.JSONObject(searchResponse)
+                val coinsArray = json.optJSONArray("coins")
+
+                if (coinsArray != null && coinsArray.length() > 0) {
+                    val firstCoin = coinsArray.getJSONObject(0)
+                    val coinId = firstCoin.getString("id")
+                    val coinName = firstCoin.getString("name")
+                    val coinSymbol = firstCoin.getString("symbol")
+                    val coinThumb = firstCoin.optString("large", "")
+
+                    val priceUrl = java.net.URL("https://api.coingecko.com/api/v3/simple/price?ids=$coinId&vs_currencies=usd")
+                    val priceResponse = priceUrl.readText()
+                    val priceJson = org.json.JSONObject(priceResponse)
+
+                    val livePrice = priceJson.optJSONObject(coinId)?.optDouble("usd", 0.0) ?: 0.0
+
+                    val fetchedCoin = CoinPrice(
+                        id = coinId,
+                        name = coinName,
+                        symbol = coinSymbol.uppercase(),
+                        current_price = if (livePrice > 0.0) livePrice else 1.0,
+                        image = coinThumb
+                    )
+
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                        onResult(fetchedCoin)
+                    }
+                } else {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                        onResult(null)
+                    }
+                }
+            } catch (_: Exception) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    onResult(null)
+                }
+            }
+        }
+    }
 }

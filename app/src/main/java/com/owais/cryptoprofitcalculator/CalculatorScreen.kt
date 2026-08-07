@@ -47,6 +47,7 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
 
     var selectedCoin by remember { mutableStateOf<CoinPrice?>(null) }
     var isNoCoinMode by remember { mutableStateOf(false) }
+    var isCoinSelected by remember { mutableStateOf(false) } // Disables cursor/typing when true
 
     var amountInvested by remember { mutableStateOf("") }
     var currentPrice by remember { mutableStateOf("") }
@@ -66,7 +67,7 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
 
     val currency = CurrencyState.currentCurrency
 
-    // Live currency conversion scaling when currency option changes
+    // Live currency conversion scaling for inputs and results when currency changes
     var previousCurrencyRate by remember { mutableStateOf(currency.rateMultiplier) }
     LaunchedEffect(currency) {
         val oldRate = previousCurrencyRate
@@ -76,6 +77,11 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
         amountInvested = amountInvested.toDoubleOrNull()?.let { String.format("%.2f", it * ratio) } ?: amountInvested
         currentPrice = currentPrice.toDoubleOrNull()?.let { String.format("%.4f", it * ratio) } ?: currentPrice
         priceIncrease = priceIncrease.toDoubleOrNull()?.let { String.format("%.4f", it * ratio) } ?: priceIncrease
+
+        profitAmount = profitAmount?.times(ratio)
+        finalValResult = finalValResult?.times(ratio)
+        initialInvResult = initialInvResult?.times(ratio)
+        totalFeesPaid = totalFeesPaid?.times(ratio)
 
         previousCurrencyRate = newRate
     }
@@ -103,12 +109,12 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
                 isRefreshing = true
                 keyboardController?.hide()
 
-                // Wipe all inputs and calculation results on drag-down refresh
                 amountInvested = ""
                 currentPrice = ""
                 priceIncrease = ""
                 selectedCoin = null
                 isNoCoinMode = false
+                isCoinSelected = false
                 searchQuery = ""
                 includeBrokerage = false
                 brokeragePercent = ""
@@ -120,7 +126,7 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
                 totalFeesPaid = null
                 resultError = null
 
-                delay(400) // Brief smooth delay for visual feedback
+                delay(400)
                 isRefreshing = false
             }
         },
@@ -183,30 +189,37 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
             ) {
                 Column(modifier = Modifier.padding(18.dp)) {
 
-                    // COIN SELECTOR WITH INSTANT CLEAR BUTTON & SMOOTH FILTERING
+                    // COIN SELECTOR WITH CURSOR LOCK & LIVE GLOBAL SEARCH (E.G. USX)
                     ExposedDropdownMenuBox(
                         expanded = expandedCoinMenu,
-                        onExpandedChange = { expandedCoinMenu = it }
+                        onExpandedChange = {
+                            if (!isCoinSelected) {
+                                expandedCoinMenu = it
+                            }
+                        }
                     ) {
                         OutlinedTextField(
                             value = searchQuery,
                             onValueChange = {
-                                searchQuery = it
-                                expandedCoinMenu = true
-                                isNoCoinMode = false
-                                selectedCoin = null
+                                if (!isCoinSelected) {
+                                    searchQuery = it
+                                    expandedCoinMenu = true
+                                    isNoCoinMode = false
+                                    selectedCoin = null
+                                }
                             },
+                            readOnly = isCoinSelected, // Disables cursor & typing once a coin is chosen
                             placeholder = { Text(stringResource(id = R.string.search_coins), color = Color.Gray) },
                             label = { Text(stringResource(id = R.string.coin), color = Color.Gray) },
                             trailingIcon = {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    // INSTANT CLEAR (X) BUTTON
                                     if (searchQuery.isNotEmpty()) {
                                         IconButton(
                                             onClick = {
                                                 searchQuery = ""
                                                 selectedCoin = null
                                                 isNoCoinMode = false
+                                                isCoinSelected = false
                                             },
                                             modifier = Modifier.size(24.dp)
                                         ) {
@@ -218,7 +231,9 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
                                         }
                                         Spacer(modifier = Modifier.width(4.dp))
                                     }
-                                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedCoinMenu)
+                                    if (!isCoinSelected) {
+                                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedCoinMenu)
+                                    }
                                 }
                             },
                             colors = OutlinedTextFieldDefaults.colors(
@@ -245,23 +260,59 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
                                 onClick = {
                                     isNoCoinMode = true
                                     selectedCoin = null
-                                    searchQuery = ""
+                                    isCoinSelected = true
+                                    searchQuery = "Custom Trade"
                                     currentPrice = ""
                                     expandedCoinMenu = false
                                     keyboardController?.hide()
                                 }
                             )
 
-                            // Optimized memory caching to eliminate backspace lag/stutter
+                            // Local filter + Live global check for tokens like USX
                             val filteredCoins = remember(searchQuery, calculatorViewModel.coinList) {
                                 if (searchQuery.isBlank() || (selectedCoin != null && searchQuery == "${selectedCoin?.name} (${selectedCoin?.symbol?.uppercase()})")) {
                                     calculatorViewModel.coinList
                                 } else {
-                                    calculatorViewModel.coinList.filter {
+                                    val matched = calculatorViewModel.coinList.filter {
                                         it.name.contains(searchQuery, ignoreCase = true) ||
                                                 it.symbol.contains(searchQuery, ignoreCase = true)
                                     }
+                                    matched
                                 }
+                            }
+
+                            // If typing something unique that isn't in the local list, add an option to search live globally
+                            val showLiveSearchOption = searchQuery.isNotBlank() &&
+                                    filteredCoins.none { it.name.equals(searchQuery, ignoreCase = true) || it.symbol.equals(searchQuery, ignoreCase = true) }
+
+                            if (showLiveSearchOption) {
+                                DropdownMenuItem(
+                                    text = { Text("🌐 Search global market for \"$searchQuery\"", color = primaryColor, fontWeight = FontWeight.Bold) },
+                                    onClick = {
+                                        calculatorViewModel.fetchLiveCoinPrice(searchQuery) { liveCoin ->
+                                            if (liveCoin != null) {
+                                                selectedCoin = liveCoin
+                                                isNoCoinMode = false
+                                                isCoinSelected = true
+                                                searchQuery = "${liveCoin.name} (${liveCoin.symbol.uppercase()})"
+                                                currentPrice = String.format("%.4f", liveCoin.current_price * currency.rateMultiplier)
+                                                expandedCoinMenu = false
+                                                keyboardController?.hide()
+                                            } else {
+                                                // Coin not found on market
+                                                searchQuery = "Coin not found"
+                                                expandedCoinMenu = false
+                                            }
+                                        }
+                                    }
+                                )
+                            }
+
+                            if (filteredCoins.isEmpty() && !showLiveSearchOption && searchQuery.isNotBlank()) {
+                                DropdownMenuItem(
+                                    text = { Text("❌ Coin not found", color = errorColor) },
+                                    onClick = { /* Do nothing */ }
+                                )
                             }
 
                             filteredCoins.forEach { coin ->
@@ -275,6 +326,7 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
                                     onClick = {
                                         selectedCoin = coin
                                         isNoCoinMode = false
+                                        isCoinSelected = true
                                         searchQuery = "${coin.name} (${coin.symbol.uppercase()})"
                                         currentPrice = String.format("%.4f", coin.current_price * currency.rateMultiplier)
                                         expandedCoinMenu = false
@@ -386,7 +438,7 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
 
                         calculatorViewModel.saveCalculation(
                             CalculationHistory(
-                                coinName = if (isNoCoinMode) "Custom Trade" else (selectedCoin?.name ?: "Custom Asset"),
+                                coinName = if (isNoCoinMode || searchQuery.isBlank()) "Custom Trade" else searchQuery,
                                 amountInvested = amount,
                                 currentPrice = price,
                                 targetPrice = targetRise,

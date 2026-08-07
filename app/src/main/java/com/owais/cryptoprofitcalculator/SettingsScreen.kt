@@ -150,7 +150,14 @@ fun SettingsScreen(
             icon = Icons.Default.Delete,
             title = stringResource(id = R.string.reset_history),
             textColor = textColor,
-            onClick = { calculatorViewModel.resetHistory() }
+            onClick = {
+                calculatorViewModel.resetHistory()
+                android.widget.Toast.makeText(
+                    context,
+                    "Calculation history successfully reset.",
+                    android.widget.Toast.LENGTH_SHORT
+                ).show()
+            }
         )
 
         SettingsRow(
