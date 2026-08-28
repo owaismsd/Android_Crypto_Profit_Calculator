@@ -22,6 +22,9 @@ class AuthViewModel : ViewModel() {
     var currentUserEmail by mutableStateOf<String?>(null)
         private set
 
+    var isEmailVerified by mutableStateOf(false)
+        private set
+
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
@@ -32,7 +35,13 @@ class AuthViewModel : ViewModel() {
         private set
 
     init {
-        currentUserEmail = auth.currentUser?.email
+        updateUserInfo()
+    }
+
+    private fun updateUserInfo() {
+        val user = auth.currentUser
+        currentUserEmail = user?.email
+        isEmailVerified = user?.isEmailVerified ?: false
     }
 
     fun dismissReauthDialog() {
@@ -49,12 +58,21 @@ class AuthViewModel : ViewModel() {
         )
 
     fun signUpWithEmail(email: String, password: String) {
+        if (!validateEmail(email)) {
+            errorMessage = "Please enter a valid email address."
+            return
+        }
+        if (!validatePassword(password)) {
+            errorMessage = "Password must be at least 8 characters long and contain both letters and numbers."
+            return
+        }
         isLoading = true
         errorMessage = null
         viewModelScope.launch {
             try {
                 auth.createUserWithEmailAndPassword(email, password).await()
-                currentUserEmail = auth.currentUser?.email
+                sendVerificationEmail()
+                updateUserInfo()
             } catch (e: Exception) {
                 errorMessage = getFriendlyErrorMessage(e)
             } finally {
@@ -64,12 +82,16 @@ class AuthViewModel : ViewModel() {
     }
 
     fun signInWithEmail(email: String, password: String) {
+        if (!validateEmail(email)) {
+            errorMessage = "Please enter a valid email address."
+            return
+        }
         isLoading = true
         errorMessage = null
         viewModelScope.launch {
             try {
                 auth.signInWithEmailAndPassword(email, password).await()
-                currentUserEmail = auth.currentUser?.email
+                updateUserInfo()
             } catch (e: Exception) {
                 errorMessage = getFriendlyErrorMessage(e)
             } finally {
@@ -85,7 +107,7 @@ class AuthViewModel : ViewModel() {
             try {
                 val credential = GoogleAuthProvider.getCredential(idToken, null)
                 auth.signInWithCredential(credential).await()
-                currentUserEmail = auth.currentUser?.email
+                updateUserInfo()
             } catch (e: Exception) {
                 errorMessage = getFriendlyErrorMessage(e)
             } finally {
@@ -94,12 +116,42 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun signOut() {
-        auth.signOut()
-        currentUserEmail = null
+    fun sendVerificationEmail() {
+        viewModelScope.launch {
+            try {
+                auth.currentUser?.sendEmailVerification()?.await()
+            } catch (e: Exception) {
+                errorMessage = getFriendlyErrorMessage(e)
+            }
+        }
     }
 
-    fun deleteAccount(password: String? = null, onComplete: (Boolean, String?) -> Unit) {
+    fun reloadUser() {
+        viewModelScope.launch {
+            try {
+                auth.currentUser?.reload()?.await()
+                updateUserInfo()
+            } catch (e: Exception) {
+                errorMessage = getFriendlyErrorMessage(e)
+            }
+        }
+    }
+
+    private fun validateEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun validatePassword(password: String): Boolean {
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$".toRegex()
+        return password.matches(passwordRegex)
+    }
+
+    fun signOut() {
+        auth.signOut()
+        updateUserInfo()
+    }
+
+    fun deleteAccount(password: String? = null, onClearData: () -> Unit, onComplete: (Boolean, String?) -> Unit) {
         val user = auth.currentUser
         if (user == null) {
             onComplete(false, "No active user found.")
@@ -119,19 +171,20 @@ class AuthViewModel : ViewModel() {
             val credential = EmailAuthProvider.getCredential(email, password)
             user.reauthenticate(credential).addOnCompleteListener { reauthTask ->
                 if (reauthTask.isSuccessful) {
-                    performAccountDeletion(user, onComplete)
+                    performAccountDeletion(user, onClearData, onComplete)
                 } else {
                     onComplete(false, getFriendlyErrorMessage(reauthTask.exception))
                 }
             }
         } else {
-            performAccountDeletion(user, onComplete)
+            performAccountDeletion(user, onClearData, onComplete)
         }
     }
 
-    private fun performAccountDeletion(user: FirebaseUser, onComplete: (Boolean, String?) -> Unit) {
+    private fun performAccountDeletion(user: FirebaseUser, onClearData: () -> Unit, onComplete: (Boolean, String?) -> Unit) {
         user.delete().addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                onClearData()
                 currentUserEmail = null
                 onComplete(true, "Account successfully deleted.")
             } else {

@@ -20,8 +20,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -39,6 +44,7 @@ fun LoginScreen(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
     var isSignUpMode by remember { mutableStateOf(false) }
 
     val bgColor = MaterialTheme.colorScheme.background
@@ -113,7 +119,14 @@ fun LoginScreen(
             value = password,
             onValueChange = { password = it },
             label = { Text(stringResource(id = R.string.password), color = Color.Gray) },
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                val description = if (passwordVisible) "Hide password" else "Show password"
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = image, contentDescription = description, tint = Color.Gray)
+                }
+            },
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = textColor,
@@ -126,6 +139,11 @@ fun LoginScreen(
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
+
+        if (isSignUpMode) {
+            Spacer(modifier = Modifier.height(8.dp))
+            PasswordRequirements(password = password)
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -199,8 +217,8 @@ fun LoginScreen(
             ) {
                 Text(
                     text = if (isSignUpMode) stringResource(id = R.string.already_have_account) else stringResource(id = R.string.dont_have_account),
-                    color = textColor,
-                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFFFD531),
+                    fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.clickable { isSignUpMode = !isSignUpMode }
                 )
             }
@@ -253,6 +271,38 @@ fun CryptoCandleLoadingAnimation(primaryColor: Color) {
             color = primaryColor,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun PasswordRequirements(password: String) {
+    val hasMinLength = password.length >= 8
+    val hasUppercase = password.any { it.isUpperCase() }
+    val hasNumber = password.any { it.isDigit() }
+
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        RequirementItem(text = "At least 8 characters", isMet = hasMinLength)
+        RequirementItem(text = "Contains uppercase letter", isMet = hasUppercase)
+        RequirementItem(text = "Contains a number", isMet = hasNumber)
+    }
+}
+
+@Composable
+fun RequirementItem(text: String, isMet: Boolean) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            imageVector = Icons.Filled.CheckCircle,
+            contentDescription = null,
+            tint = if (isMet) Color(0xFF4CAF50) else Color.Gray.copy(alpha = 0.5f),
+            modifier = Modifier.size(16.dp)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = text,
+            fontSize = 12.sp,
+            color = if (isMet) Color(0xFF4CAF50) else Color.Gray,
+            fontWeight = if (isMet) FontWeight.Bold else FontWeight.Normal
         )
     }
 }

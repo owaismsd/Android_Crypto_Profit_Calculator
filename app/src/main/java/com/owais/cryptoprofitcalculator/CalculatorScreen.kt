@@ -145,12 +145,22 @@ fun CalculatorScreen(calculatorViewModel: CalculatorViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = stringResource(id = R.string.calculator_title),
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = primaryColor
-                )
+                Column {
+                    Text(
+                        text = stringResource(id = R.string.calculator_title),
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = primaryColor
+                    )
+                    calculatorViewModel.networkError?.let {
+                        Text(
+                            text = it,
+                            color = errorColor,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
 
                 Box {
                     OutlinedButton(

@@ -22,6 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.Firebase
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
+import com.google.firebase.initialize
 import com.owais.cryptoprofitcalculator.ui.theme.CryptoProfitCalculatorTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +33,13 @@ class MainActivity : ComponentActivity() {
         AvatarPrefs.init(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Initialize Firebase App Check
+        Firebase.initialize(context = this)
+        val firebaseAppCheck = FirebaseAppCheck.getInstance()
+        firebaseAppCheck.installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance()
+        )
 
         val priceCheckRequest = androidx.work.PeriodicWorkRequestBuilder<PriceCheckWorker>(
             15, java.util.concurrent.TimeUnit.MINUTES
@@ -66,43 +77,49 @@ class MainActivity : ComponentActivity() {
                     val authViewModel: AuthViewModel = viewModel()
 
                     if (authViewModel.currentUserEmail != null) {
-                        val calculatorViewModel: CalculatorViewModel = viewModel()
-                        var selectedTab by remember { mutableStateOf(0) }
+                        if (authViewModel.isEmailVerified) {
+                            val calculatorViewModel: CalculatorViewModel = viewModel()
+                            var selectedTab by remember { mutableStateOf(0) }
 
-                        Scaffold(
-                            bottomBar = {
-                                NavigationBar {
-                                    NavigationBarItem(
-                                        selected = selectedTab == 0,
-                                        onClick = { selectedTab = 0 },
-                                        icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-                                        label = { Text("Home") }
-                                    )
-                                    NavigationBarItem(
-                                        selected = selectedTab == 1,
-                                        onClick = { selectedTab = 1 },
-                                        icon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
-                                        label = { Text("Settings") }
-                                    )
+                            Scaffold(
+                                bottomBar = {
+                                    NavigationBar {
+                                        NavigationBarItem(
+                                            selected = selectedTab == 0,
+                                            onClick = { selectedTab = 0 },
+                                            icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
+                                            label = { Text("Home") }
+                                        )
+                                        NavigationBarItem(
+                                            selected = selectedTab == 1,
+                                            onClick = { selectedTab = 1 },
+                                            icon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
+                                            label = { Text("Settings") }
+                                        )
+                                    }
+                                }
+                            ) { tabPadding ->
+                                Box(modifier = Modifier.padding(tabPadding)) {
+                                    if (selectedTab == 0) {
+                                        CalculatorScreen(calculatorViewModel = calculatorViewModel)
+                                    } else {
+                                        SettingsScreen(
+                                            authViewModel = authViewModel,
+                                            calculatorViewModel = calculatorViewModel
+                                        )
+                                    }
                                 }
                             }
-                        ) { tabPadding ->
-                            Box(modifier = Modifier.padding(tabPadding)) {
-                                if (selectedTab == 0) {
-                                    CalculatorScreen(calculatorViewModel = calculatorViewModel)
-                                } else {
-                                    SettingsScreen(
-                                        authViewModel = authViewModel,
-                                        calculatorViewModel = calculatorViewModel
-                                    )
-                                }
+                        } else {
+                            Box(modifier = Modifier.padding(innerPadding)) {
+                                VerifyEmailScreen(authViewModel = authViewModel)
                             }
                         }
                     } else {
                         Box(modifier = Modifier.padding(innerPadding)) {
                             LoginScreen(
                                 authViewModel = authViewModel,
-                                webClientId = "127524756617-79ushljkist5od97isasjumj43jeplau.apps.googleusercontent.com"
+                                webClientId = BuildConfig.WEB_CLIENT_ID
                             )
                         }
                     }

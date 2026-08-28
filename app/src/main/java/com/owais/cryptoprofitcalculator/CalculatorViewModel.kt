@@ -26,6 +26,9 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
     var showResetSuccessDialog by mutableStateOf(false)
         private set
 
+    var networkError by mutableStateOf<String?>(null)
+        private set
+
     init {
         loadHistory()
         fetchCoins()
@@ -71,6 +74,7 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
     private fun fetchCoins() {
         viewModelScope.launch {
             try {
+                networkError = null
                 val retrofit = Retrofit.Builder()
                     .baseUrl("https://api.coingecko.com/api/v3/")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -81,7 +85,9 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
 
                 coinList.clear()
                 coinList.addAll(coins)
-            } catch (_: Exception) {}
+            } catch (e: Exception) {
+                networkError = "Unable to fetch live prices. Check your connection."
+            }
         }
     }
 

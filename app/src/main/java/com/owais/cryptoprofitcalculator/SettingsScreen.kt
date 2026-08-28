@@ -41,17 +41,21 @@ fun SettingsScreen(
     val isDark = ThemeState.isDarkTheme ?: isSystemInDarkTheme()
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showAvatarDialog by remember { mutableStateOf(false) }
+    var showPrivacyPolicy by remember { mutableStateOf(false) }
 
     val activeAvatar = CryptoAvatars.getAvatar(AvatarPrefs.currentAvatarId)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(bgColor)
-            .padding(horizontal = 24.dp, vertical = 32.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    if (showPrivacyPolicy) {
+        PrivacyPolicyScreen(onBack = { showPrivacyPolicy = false })
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(bgColor)
+                .padding(horizontal = 24.dp, vertical = 32.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
         Text(
             text = stringResource(id = R.string.account),
             fontSize = 24.sp,
@@ -164,13 +168,7 @@ fun SettingsScreen(
             icon = Icons.Default.Info,
             title = stringResource(id = R.string.privacy_policy),
             textColor = textColor,
-            onClick = {
-                val intent = android.content.Intent(
-                    android.content.Intent.ACTION_VIEW,
-                    android.net.Uri.parse("https://owaismsd.github.io/Privacy-Policy/")
-                )
-                context.startActivity(intent)
-            }
+            onClick = { showPrivacyPolicy = true }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -191,7 +189,7 @@ fun SettingsScreen(
             textColor = textColor,
             isDestructive = true,
             onClick = {
-                authViewModel.deleteAccount { success, message ->
+                authViewModel.deleteAccount(onClearData = { calculatorViewModel.resetHistory() }) { success, message ->
                     if (success) {
                         android.widget.Toast.makeText(
                             context,
@@ -315,7 +313,7 @@ fun SettingsScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        authViewModel.deleteAccount(password = passwordInput) { success, message ->
+                        authViewModel.deleteAccount(password = passwordInput, onClearData = { calculatorViewModel.resetHistory() }) { success, message ->
                             if (success) {
                                 authViewModel.dismissReauthDialog()
                                 passwordInput = ""
@@ -426,6 +424,7 @@ fun SettingsScreen(
                 }
             }
         )
+    }
     }
 }
 
