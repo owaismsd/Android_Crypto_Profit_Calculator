@@ -182,8 +182,13 @@ fun LoginScreen(
             OutlinedButton(
                 onClick = {
                     keyboardController?.hide()
-                    launcher.launch(googleSignInClient.signInIntent)
+                    googleSignInClient?.let {
+                        launcher.launch(it.signInIntent)
+                    } ?: run {
+                        Log.e("GoogleSignIn", "Google Sign In Client is null. Check WEB_CLIENT_ID.")
+                    }
                 },
+                enabled = googleSignInClient != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),

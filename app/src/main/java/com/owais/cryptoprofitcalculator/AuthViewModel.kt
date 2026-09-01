@@ -48,14 +48,16 @@ class AuthViewModel : ViewModel() {
         showReauthDialog = false
     }
 
-    fun getGoogleSignInClient(activity: Activity, webClientId: String) =
-        GoogleSignIn.getClient(
+    fun getGoogleSignInClient(activity: Activity, webClientId: String): com.google.android.gms.auth.api.signin.GoogleSignInClient? {
+        if (webClientId.isBlank()) return null
+        return GoogleSignIn.getClient(
             activity,
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(webClientId)
                 .requestEmail()
                 .build()
         )
+    }
 
     fun signUpWithEmail(email: String, password: String) {
         if (!validateEmail(email)) {
