@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -48,167 +49,172 @@ fun SettingsScreen(
     if (showPrivacyPolicy) {
         PrivacyPolicyScreen(onBack = { showPrivacyPolicy = false })
     } else {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(bgColor)
-                .padding(horizontal = 24.dp, vertical = 32.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-        Text(
-            text = stringResource(id = R.string.account),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = textColor,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        // --- CLICKABLE DYNAMIC CRYPTO AVATAR ---
         Box(
             modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .background(
-                    Brush.linearGradient(colors = activeAvatar.gradientColors)
-                )
-                .clickable { showAvatarDialog = true },
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .background(bgColor),
+            contentAlignment = Alignment.TopCenter
         ) {
-            Icon(
-                imageVector = activeAvatar.icon,
-                contentDescription = "Profile Avatar",
-                modifier = Modifier.size(50.dp),
-                tint = Color.White
-            )
-            // Edit hint badge overlay
-            Box(
+            Column(
                 modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(6.dp)
-                    .size(24.dp)
-                    .clip(CircleShape)
-                    .background(Color.Black.copy(alpha = 0.6f)),
-                contentAlignment = Alignment.Center
+                    .fillMaxHeight()
+                    .widthIn(max = 600.dp)
+                    .padding(horizontal = 24.dp, vertical = 32.dp)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Change",
-                    tint = Color.White,
-                    modifier = Modifier.size(12.dp)
+                Text(
+                    text = stringResource(id = R.string.account),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = textColor,
+                    modifier = Modifier.padding(bottom = 32.dp)
                 )
-            }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = authViewModel.currentUserEmail ?: stringResource(id = R.string.not_logged_in),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = textColor
-        )
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = if (isDark) Icons.Default.DarkMode else Icons.Default.LightMode,
-                contentDescription = null,
-                tint = textColor,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Text(
-                text = stringResource(id = R.string.dark_mode),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Medium,
-                color = textColor,
-                modifier = Modifier.weight(1f)
-            )
-            Switch(
-                checked = isDark,
-                onCheckedChange = { ThemeState.saveTheme(it) },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = primaryColor,
-                    checkedTrackColor = surfaceColor,
-                    uncheckedThumbColor = Color.Gray,
-                    uncheckedTrackColor = surfaceColor
-                )
-            )
-        }
-
-        SettingsRow(
-            icon = Icons.Default.Translate,
-            title = stringResource(id = R.string.language_setting),
-            textColor = textColor,
-            onClick = { showLanguageDialog = true }
-        )
-
-        SettingsRow(
-            icon = Icons.Default.Delete,
-            title = stringResource(id = R.string.reset_history),
-            textColor = textColor,
-            onClick = {
-                calculatorViewModel.resetHistory()
-                android.widget.Toast.makeText(
-                    context,
-                    "Calculation history successfully reset.",
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
-            }
-        )
-
-        SettingsRow(
-            icon = Icons.Default.Info,
-            title = stringResource(id = R.string.privacy_policy),
-            textColor = textColor,
-            onClick = { showPrivacyPolicy = true }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider(color = surfaceColor, thickness = 1.dp)
-        Spacer(modifier = Modifier.height(16.dp))
-
-        SettingsRow(
-            icon = Icons.Default.ExitToApp,
-            title = stringResource(id = R.string.sign_out),
-            textColor = textColor,
-            isDestructive = true,
-            onClick = { authViewModel.signOut() }
-        )
-
-        SettingsRow(
-            icon = Icons.Default.Warning,
-            title = stringResource(id = R.string.delete_account),
-            textColor = textColor,
-            isDestructive = true,
-            onClick = {
-                authViewModel.deleteAccount(onClearData = { calculatorViewModel.resetHistory() }) { success, message ->
-                    if (success) {
-                        android.widget.Toast.makeText(
-                            context,
-                            message ?: "Account successfully deleted.",
-                            android.widget.Toast.LENGTH_LONG
-                        ).show()
-                    } else if (message != "REQUIRES_RECENT_LOGIN") {
-                        android.widget.Toast.makeText(
-                            context,
-                            message ?: "Error deleting account.",
-                            android.widget.Toast.LENGTH_LONG
-                        ).show()
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .background(
+                            Brush.linearGradient(colors = activeAvatar.gradientColors)
+                        )
+                        .clickable { showAvatarDialog = true },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = activeAvatar.icon,
+                        contentDescription = "Profile Avatar",
+                        modifier = Modifier.size(50.dp),
+                        tint = Color.White
+                    )
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(6.dp)
+                            .size(24.dp)
+                            .clip(CircleShape)
+                            .background(Color.Black.copy(alpha = 0.6f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Change",
+                            tint = Color.White,
+                            modifier = Modifier.size(12.dp)
+                        )
                     }
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = authViewModel.currentUserEmail ?: stringResource(id = R.string.not_logged_in),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = textColor
+                )
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp, horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = if (isDark) Icons.Default.DarkMode else Icons.Default.LightMode,
+                        contentDescription = null,
+                        tint = textColor,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = stringResource(id = R.string.dark_mode),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = textColor,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(
+                        checked = isDark,
+                        onCheckedChange = { ThemeState.saveTheme(it) },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = primaryColor,
+                            checkedTrackColor = surfaceColor,
+                            uncheckedThumbColor = Color.Gray,
+                            uncheckedTrackColor = surfaceColor
+                        )
+                    )
+                }
+
+                SettingsRow(
+                    icon = Icons.Default.Translate,
+                    title = stringResource(id = R.string.language_setting),
+                    textColor = textColor,
+                    onClick = { showLanguageDialog = true }
+                )
+
+                SettingsRow(
+                    icon = Icons.Default.Delete,
+                    title = stringResource(id = R.string.reset_history),
+                    textColor = textColor,
+                    onClick = {
+                        calculatorViewModel.resetHistory()
+                        android.widget.Toast.makeText(
+                            context,
+                            "Calculation history successfully reset.",
+                            android.widget.Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+
+                SettingsRow(
+                    icon = Icons.Default.Info,
+                    title = stringResource(id = R.string.privacy_policy),
+                    textColor = textColor,
+                    onClick = { showPrivacyPolicy = true }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                HorizontalDivider(color = surfaceColor, thickness = 1.dp)
+                Spacer(modifier = Modifier.height(16.dp))
+
+                SettingsRow(
+                    icon = Icons.AutoMirrored.Filled.ExitToApp,
+                    title = stringResource(id = R.string.sign_out),
+                    textColor = textColor,
+                    isDestructive = true,
+                    onClick = { authViewModel.signOut() }
+                )
+
+                SettingsRow(
+                    icon = Icons.Default.Warning,
+                    title = stringResource(id = R.string.delete_account),
+                    textColor = textColor,
+                    isDestructive = true,
+                    onClick = {
+                        authViewModel.deleteAccount(onClearData = { calculatorViewModel.resetHistory() }) { success, message ->
+                            if (success) {
+                                android.widget.Toast.makeText(
+                                    context,
+                                    message ?: "Account successfully deleted.",
+                                    android.widget.Toast.LENGTH_LONG
+                                ).show()
+                            } else if (message != "REQUIRES_RECENT_LOGIN") {
+                                android.widget.Toast.makeText(
+                                    context,
+                                    message ?: "Error deleting account.",
+                                    android.widget.Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
+                )
             }
-        )
+        }
     }
 
-    // --- CRYPTO IDENTITY SELECTOR DIALOG ---
     if (showAvatarDialog) {
         AlertDialog(
             onDismissRequest = { showAvatarDialog = false },
@@ -222,7 +228,7 @@ fun SettingsScreen(
                 )
             },
             text = {
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
                     Text(
                         text = "Choose your high-performance trading badge:",
                         color = Color.Gray,
@@ -284,7 +290,6 @@ fun SettingsScreen(
         )
     }
 
-    // Password Re-authentication Dialog for Account Deletion
     if (authViewModel.showReauthDialog) {
         AlertDialog(
             onDismissRequest = { authViewModel.dismissReauthDialog() },
@@ -345,86 +350,45 @@ fun SettingsScreen(
             containerColor = surfaceColor,
             title = {
                 Text(
-                    text = "Select Language",
+                    text = stringResource(id = R.string.select_language),
                     color = textColor,
                     fontWeight = FontWeight.Bold
                 )
             },
             text = {
-                Column {
-                    Text(
-                        text = "English",
-                        color = textColor,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                changeLanguage(context, "en")
-                                showLanguageDialog = false
-                            }
-                            .padding(vertical = 12.dp)
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    val languages = listOf(
+                        "en" to "English",
+                        "ar" to "العربية",
+                        "ur" to "اردو",
+                        "hi" to "हिन्दी",
+                        "zh" to "中文"
                     )
-                    HorizontalDivider(color = Color.DarkGray, thickness = 0.5.dp)
-                    Text(
-                        text = "العربية",
-                        color = textColor,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                changeLanguage(context, "ar")
-                                showLanguageDialog = false
-                            }
-                            .padding(vertical = 12.dp)
-                    )
-                    HorizontalDivider(color = Color.DarkGray, thickness = 0.5.dp)
-                    Text(
-                        text = "اردو",
-                        color = textColor,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                changeLanguage(context, "ur")
-                                showLanguageDialog = false
-                            }
-                            .padding(vertical = 12.dp)
-                    )
-                    HorizontalDivider(color = Color.DarkGray, thickness = 0.5.dp)
-                    Text(
-                        text = "हिन्दी",
-                        color = textColor,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                changeLanguage(context, "hi")
-                                showLanguageDialog = false
-                            }
-                            .padding(vertical = 12.dp)
-                    )
-                    HorizontalDivider(color = Color.DarkGray, thickness = 0.5.dp)
-                    Text(
-                        text = "中文",
-                        color = textColor,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                changeLanguage(context, "zh")
-                                showLanguageDialog = false
-                            }
-                            .padding(vertical = 12.dp)
-                    )
+                    languages.forEachIndexed { index, (tag, name) ->
+                        Text(
+                            text = name,
+                            color = textColor,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    changeLanguage(tag)
+                                    showLanguageDialog = false
+                                }
+                                .padding(vertical = 12.dp)
+                        )
+                        if (index < languages.size - 1) {
+                            HorizontalDivider(color = Color.DarkGray, thickness = 0.5.dp)
+                        }
+                    }
                 }
             },
             confirmButton = {
                 TextButton(onClick = { showLanguageDialog = false }) {
-                    Text("Cancel", color = primaryColor)
+                    Text(stringResource(id = R.string.cancel), color = primaryColor)
                 }
             }
         )
-    }
     }
 }
 
@@ -463,7 +427,7 @@ fun SettingsRow(
         )
 
         Icon(
-            imageVector = Icons.Default.KeyboardArrowRight,
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = "Navigate",
             tint = if (isDestructive) RedLoss else Color.Gray,
             modifier = Modifier.size(24.dp)
@@ -471,13 +435,8 @@ fun SettingsRow(
     }
 }
 
-fun changeLanguage(context: android.content.Context, languageTag: String) {
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-        val localeManager = context.getSystemService(android.app.LocaleManager::class.java)
-        localeManager.applicationLocales = android.os.LocaleList.forLanguageTags(languageTag)
-    } else {
-        androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
-            androidx.core.os.LocaleListCompat.forLanguageTags(languageTag)
-        )
-    }
+fun changeLanguage(languageTag: String) {
+    androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
+        androidx.core.os.LocaleListCompat.forLanguageTags(languageTag)
+    )
 }

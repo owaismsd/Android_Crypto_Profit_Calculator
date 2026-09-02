@@ -3,6 +3,12 @@
     <string name="welcome_back">欢迎回来</string>
     <string name="include_brokerage">包含交易所费用</string>
     <string name="brokerage_percent">费率 (%)</string>
+    <string name="net_profit_loss">净利润/亏损</string>
+    <string name="initial_investment_label">初始投资:</string>
+    <string name="final_value_label">最终价值:</string>
+    <string name="total_fees_paid">总费用支出</string>
+    <string name="inv_abbreviation">投资: %s</string>
+    <string name="custom_trade">自定义交易</string>
     <string name="create_account">创建账户</string>
     <string name="email">邮箱</string>
     <string name="password">密码</string>
@@ -18,6 +24,8 @@
     <string name="current_coin_price">当前币价（美元）</string>
     <string name="mode_target_price">模式：目标价格</string>
     <string name="mode_price_increase">模式：价格涨幅</string>
+    <string name="buy_price_label">买入价 (%s)</string>
+    <string name="target_rise_label">目标涨幅 (%s)</string>
     <string name="target_price">目标价格（美元）</string>
     <string name="price_increase">价格涨幅（美元）</string>
     <string name="calculate">计算</string>
@@ -29,6 +37,7 @@
     <string name="not_logged_in">未登录</string>
 
     <string name="dark_mode">深色模式</string>
+    <string name="select_language">选择语言</string>
 
     <string name="language_setting">语言</string>
 

@@ -4,7 +4,11 @@
     <string name="include_brokerage">Include Exchange Fees</string>
     <string name="brokerage_percent">Fee (%)</string>
     <string name="net_profit_loss">Net Profit / Loss</string>
+    <string name="initial_investment_label">Initial investment:</string>
+    <string name="final_value_label">Final value:</string>
     <string name="total_fees_paid">Total Fees Paid</string>
+    <string name="inv_abbreviation">Inv: %s</string>
+    <string name="custom_trade">Custom Trade</string>
     <string name="swipe_to_delete">Swipe to delete</string>
     <string name="history_reset_title">History Cleared</string>
     <string name="history_reset_msg">All your calculation history has been successfully reset.</string>
@@ -30,6 +34,8 @@
     <string name="current_coin_price">Current coin price (USD)</string>
     <string name="mode_target_price">Mode: Target Price</string>
     <string name="mode_price_increase">Mode: Price Increase</string>
+    <string name="buy_price_label">Buy Price (%s)</string>
+    <string name="target_rise_label">Target Rise (%s)</string>
     <string name="target_price">Target price (USD)</string>
     <string name="price_increase">Price increase (USD)</string>
     <string name="calculate">Calculate</string>
@@ -42,6 +48,7 @@
     <string name="account">Account</string>
     <string name="not_logged_in">Not logged in</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="select_language">Select Language</string>
 
     <string name="language_setting">Language</string>
     <string name="reset_history">Reset History</string>

@@ -21,6 +21,10 @@ android {
         buildConfigField("String", "WEB_CLIENT_ID", "\"$webClientId\"")
     }
 
+    androidResources {
+        localeFilters += listOf("en", "ar", "ur", "hi", "zh")
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true

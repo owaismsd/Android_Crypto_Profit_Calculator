@@ -3,6 +3,12 @@
     <string name="welcome_back">वापसी पर स्वागत है</string>
     <string name="include_brokerage">एक्सचेंज शुल्क शामिल करें</string>
     <string name="brokerage_percent">शुल्क (%)</string>
+    <string name="net_profit_loss">कुल लाभ / हानि</string>
+    <string name="initial_investment_label">प्रारंभिक निवेश:</string>
+    <string name="final_value_label">अंतिम मूल्य:</string>
+    <string name="total_fees_paid">कुल भुगतान किया गया शुल्क</string>
+    <string name="inv_abbreviation">निवेश: %s</string>
+    <string name="custom_trade">कस्टम ट्रेड</string>
     <string name="create_account">खाता बनाएं</string>
     <string name="email">ईमेल</string>
     <string name="password">पासवर्ड</string>
@@ -18,6 +24,8 @@
     <string name="current_coin_price">कॉइन की मौजूदा कीमत (USD)</string>
     <string name="mode_target_price">मोड: लक्ष्य कीमत</string>
     <string name="mode_price_increase">मोड: कीमत में वृद्धि</string>
+    <string name="buy_price_label">खरीद मूल्य (%s)</string>
+    <string name="target_rise_label">लक्षित वृद्धि (%s)</string>
     <string name="target_price">लक्ष्य कीमत (USD)</string>
     <string name="price_increase">कीमत में वृद्धि (USD)</string>
     <string name="calculate">गणना करें</string>
@@ -28,6 +36,7 @@
     <string name="account">खाता</string>
     <string name="not_logged_in">लॉग इन नहीं है</string>
     <string name="dark_mode">डार्क मोड</string>
+    <string name="select_language">भाषा चुनें</string>
 
     <string name="language_setting">भाषा</string>
 

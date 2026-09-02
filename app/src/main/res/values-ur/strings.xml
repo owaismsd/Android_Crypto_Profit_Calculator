@@ -3,6 +3,12 @@
     <string name="welcome_back">خوش آمدید</string>
     <string name="include_brokerage">ایکسچینج فیس شامل کریں</string>
     <string name="brokerage_percent">فیس (%)</string>
+    <string name="net_profit_loss">کل نفع / نقصان</string>
+    <string name="initial_investment_label">ابتدائی سرمایہ کاری:</string>
+    <string name="final_value_label">حتّمی قیمت:</string>
+    <string name="total_fees_paid">کل ادا شدہ فیس</string>
+    <string name="inv_abbreviation">سرمایہ: %s</string>
+    <string name="custom_trade">کسٹم ٹریڈ</string>
     <string name="create_account">اکاؤنٹ بنائیں</string>
     <string name="email">ای میل</string>
     <string name="password">پاس ورڈ</string>
@@ -18,6 +24,8 @@
     <string name="current_coin_price">موجودہ کوائن قیمت (USD)</string>
     <string name="mode_target_price">موڈ: ٹارگٹ قیمت</string>
     <string name="mode_price_increase">موڈ: قیمت میں اضافہ</string>
+    <string name="buy_price_label">خرید قیمت (%s)</string>
+    <string name="target_rise_label">ہدف اضافہ (%s)</string>
     <string name="target_price">ٹارگٹ قیمت (USD)</string>
     <string name="price_increase">قیمت میں اضافہ (USD)</string>
     <string name="calculate">حساب کریں</string>
@@ -28,6 +36,7 @@
     <string name="account">اکاؤنٹ</string>
     <string name="not_logged_in">لاگ ان نہیں</string>
     <string name="dark_mode">ڈارک موڈ</string>
+    <string name="select_language">زبان منتخب کریں</string>
 
     <string name="language_setting">زبان</string>
 

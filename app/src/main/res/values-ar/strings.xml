@@ -2,6 +2,12 @@
     <string name="app_name">حاسبة أرباح العملات المشفرة</string>
     <string name="include_brokerage">تضمين رسوم التبادل</string>
     <string name="brokerage_percent">الرسوم (%)</string>
+    <string name="net_profit_loss">صافي الربح / الخسارة</string>
+    <string name="initial_investment_label">الاستثمار الأولي:</string>
+    <string name="final_value_label">القيمة النهائية:</string>
+    <string name="total_fees_paid">إجمالي الرسوم المدفوعة</string>
+    <string name="inv_abbreviation">استثمار: %s</string>
+    <string name="custom_trade">صفقة مخصصة</string>
     <string name="welcome_back">مرحبًا بعودتك</string>
     <string name="create_account">إنشاء حساب</string>
     <string name="email">البريد الإلكتروني</string>
@@ -18,6 +24,8 @@
     <string name="current_coin_price">السعر الحالي للعملة (دولار)</string>
     <string name="mode_target_price">الوضع: السعر المستهدف</string>
     <string name="mode_price_increase">الوضع: زيادة السعر</string>
+    <string name="buy_price_label">سعر الشراء (%s)</string>
+    <string name="target_rise_label">الارتفاع المستهدف (%s)</string>
     <string name="target_price">السعر المستهدف (دولار)</string>
     <string name="price_increase">زيادة السعر (دولار)</string>
     <string name="calculate">احسب</string>
@@ -28,6 +36,7 @@
     <string name="account">الحساب</string>
     <string name="not_logged_in">غير مسجل الدخول</string>
     <string name="dark_mode">الوضع الداكن</string>
+    <string name="select_language">اختر اللغة</string>
 
     <!-- We added the language setting string right here -->
     <string name="language_setting">اللغة</string>
